@@ -7,7 +7,7 @@ public class Doctor {
 	String consultationType;
 	DayOfWeek[] daysAvailable;
 	Duration available;
-	List<TreeSet<LocalTime>> appt;//use appointment instead of start time of appointment; make custom comparator for sorting
+	SortedSet<LocalTime> appt;//use appointment instead of start time of appointment; make custom comparator for sorting
 	//static Map<Integer,Doctor> docs;
 	
 	Doctor(int docID, String name, String consultationType, DayOfWeek[] daysAvailable,LocalTime startTime,LocalTime endTime){
@@ -17,10 +17,7 @@ public class Doctor {
 		this.daysAvailable = daysAvailable;
 		this.available = Duration.between(startTime, endTime);
 		
-		appt = new ArrayList<TreeSet<LocalTime>>();
-//		for(int i=0;i<7;i++) {
-//			appt.get(i)=new TreeSet<LocalTime>();
-//		}
+		appt = new TreeSet<LocalTime>();
 		AppData.docs.put(docID, this);
 	}
 	
@@ -28,7 +25,7 @@ public class Doctor {
 		return this.docID;
 	}
 	
-	public TreeSet<LocalTime> getAppts(DayOfWeek day){
-		return this.appt.get(day.getValue());
+	public SortedSet<LocalTime> getAppts(){
+		return this.appt;
 	}
 }

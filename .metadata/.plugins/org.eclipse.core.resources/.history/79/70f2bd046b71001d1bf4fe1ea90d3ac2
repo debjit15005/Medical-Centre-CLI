@@ -2,7 +2,7 @@ import java.time.*;
 
 public class Appointment {
 	long timestamp;
-	int studID;
+	String studID;
 	int docID;
 	DayOfWeek day;
 	LocalTime time;
@@ -14,7 +14,7 @@ public class Appointment {
 		this.day=day;
 		this.time = LocalTime.of(hour, min);
 		
-		doc.getAppts(day).add(time);
+		doc.getAppts().add(time);
 	}
 	
 	

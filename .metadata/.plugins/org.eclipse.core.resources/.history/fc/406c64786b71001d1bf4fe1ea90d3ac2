@@ -3,14 +3,14 @@ import java.util.Map;
 import java.time.*;
 
 public class Student {
-	int studID;
+	String studID;
 	private String name;
 	private String email;
 	private String mobile;
 	
 	
 	
-	Student (String name, int studID, String email, String mobile ){
+	Student (String name, String studID, String email, String mobile ){
 		this.name = name;
 		this.email = email;
 		this.mobile = mobile;
