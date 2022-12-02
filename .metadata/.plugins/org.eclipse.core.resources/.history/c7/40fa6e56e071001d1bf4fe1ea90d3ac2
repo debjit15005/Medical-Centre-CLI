@@ -1,0 +1,29 @@
+import java.util.*;
+public class Main {
+	public static void main(String[] args) {
+		//take input of students and create students
+		
+		//take input of notice board and create doctors
+		
+		//take input of appointment and create appointment
+		Admin a = new Admin();
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Welcome to MedC");
+		System.out.println("Choose mode: \n A Admin Mode \n S Student Mode");
+		String mode = sc.nextLine();
+		
+		switch(mode) {
+		case "A":{
+			System.out.println("Welcome Admin");
+			//System.out.println("Menu: \n 1 ")
+		}
+		case "S":{
+			System.out.println("Welcome Student");
+			System.out.println("1. Login \n 2. Register");
+		}
+			
+		}
+	}
+}
