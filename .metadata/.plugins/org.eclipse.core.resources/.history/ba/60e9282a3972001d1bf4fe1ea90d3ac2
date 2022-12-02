@@ -81,43 +81,9 @@ public class Main {
 	}
 	
 	public static void adminMenu(Scanner sc) {
-//		System.out.println("in adminMenu");
-		int in1 = 0;
-		Admin a = new Admin();
-		Thread t0 = new Thread(a);
-		t0.start();
-		System.out.println("Welcome Admin");
-		System.out.println("Menu: \n 1 View Student records\n 2 Today's appointments\n 3 Update Notice Board \n 4 Medicine Store\n 0 Go Back");
-		in1 = sc.nextInt();
-		sc.nextLine();
-		switch(in1){
-		case 1:
-			System.out.println("Student Records");
-			System.out.println(t0.isAlive());
-			break;
-		case 2:
-			System.out.println("Today's appointments");
-			System.out.println(t0.isAlive());
-			break;
-		case 3:
-			System.out.println("Notices");
-			System.out.println(t0.isAlive());
-			break;
-		case 4:
-			System.out.println("Medicine Store");
-			System.out.println(t0.isAlive());
-			break;
-		case 0:
-//			System.out.println(t0.isAlive());
-			t0.interrupt();
-//			System.out.println(t0.isAlive());
-			modeMenu(sc);
-			break;
-		}
-		
+		System.out.println("in adminMenu");
 	}
 	public static void studentMenu(Scanner sc) {
 		System.out.println("in studentMenu");
 	}
-	
 }

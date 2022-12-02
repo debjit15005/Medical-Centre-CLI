@@ -3,12 +3,11 @@ import java.util.Scanner;
 import java.util.Map;
 import java.time.*;
 
-public class Student implements Runnable{
+public class Student {
 	int studID;
 	private String name;
 	private String email;
 	private String mobile;
-	boolean running = true;
 	
 	
 	
@@ -17,7 +16,7 @@ public class Student implements Runnable{
 		this.email = email;
 		this.mobile = mobile;
 		this.studID = studID;
-//		this.running = true;
+		
 		AppData.studs.put(studID, this);
 	}
 	
@@ -125,16 +124,6 @@ public class Student implements Runnable{
 		
 	public String getName() {
 		return this.name;
-	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		while(running) {
-			System.out.println(this.studID + " is running");
-			continue;
-		}
-		
 	}
 }
 	
