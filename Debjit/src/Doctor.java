@@ -1,4 +1,5 @@
 import java.time.*;
+import java.time.format.TextStyle;
 import java.util.*;
 
 public class Doctor {
@@ -8,8 +9,8 @@ public class Doctor {
 	DayOfWeek[] daysAvailable;
 	LocalTime startTime;
 	LocalTime endTime;
-	List<TreeSet<LocalTime>> appt;//use appointment instead of start time of appointment; make custom comparator for sorting
-	//static Map<Integer,Doctor> docs;
+	List<HashSet<Appointment>> appt;//use appointment instead of start time of appointment; make custom comparator for sorting
+	
 	
 	Doctor(int docID, String name, String consultationType, DayOfWeek[] daysAvailable,LocalTime startTime,LocalTime endTime){
 		this.name = name;
@@ -18,11 +19,11 @@ public class Doctor {
 		this.daysAvailable = daysAvailable;
 		this.startTime = startTime;
 		this.endTime = endTime;
-		
-		appt = new ArrayList<TreeSet<LocalTime>>();
-//		for(int i=0;i<7;i++) {
-//			appt.get(i)=new TreeSet<LocalTime>();
-//		}
+		this.appt = new ArrayList<HashSet<Appointment>>(7);
+		for(int i=0;i<7;i++) {
+			appt.add(new HashSet<Appointment>());
+			
+		}
 		AppData.docs.put(docID, this);
 	}
 	
@@ -30,8 +31,8 @@ public class Doctor {
 		return this.docID;
 	}
 	
-	public TreeSet<LocalTime> getAppts(DayOfWeek day){
-		return this.appt.get(day.getValue());
+	public HashSet<Appointment> getAppts(DayOfWeek day){
+		return this.appt.get(day.getValue()-1);
 	}
 	
 	public String getName() {
@@ -63,6 +64,16 @@ public class Doctor {
 	}
 	
 	public String toString() {
-		return String.format(this.docID + " %1$%20s " + this.consultationType +" "+ this.daysAvailable + " " + this.startTime + " - " + this.endTime, this.name);
+		String[] days = new String[this.daysAvailable.length];
+		for(int i=0;i<this.daysAvailable.length;i++) {
+			days[i] = this.daysAvailable[i].getDisplayName(TextStyle.NARROW,Locale.US);
+		}
+		String dayss = "";
+		for(int i=0;i<this.daysAvailable.length;i++) {
+			dayss = dayss + days[i] + " ";
+		}
+		
+				
+		return String.format(this.docID + " %-10s " + "%-14s" +" "+ "%-10s" + " " + this.startTime + " - " + this.endTime, this.consultationType, this.name, dayss);
 	}
 }

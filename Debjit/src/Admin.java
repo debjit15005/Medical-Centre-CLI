@@ -1,19 +1,30 @@
 import java.util.*;
 public class Admin implements Runnable{
+	Thread adminThread;
+	private  boolean stopThread = false;
 	
-	boolean running = true;
-//	private AppData appData;
-//	Admin(){
-//		
-//	}
 	
-	public void run() {
-		while(true) {
-			//System.out.println("Admin running");
-			continue;
+	public void start() {
+		if(adminThread==null) {
+			this.adminThread = new Thread(this,"admin");
+			this.adminThread.start();
 		}
 	}
-	
+	public void run() {
+		while(true) {
+			if(stopThread) {System.out.println("Ending admin"); break;}
+			
+			System.out.println("Welcome Admin");
+			Scanner adminScanner = new Scanner(System.in);
+			
+				Main.adminMenu(adminScanner);
+
+			
+		}
+	}
+	public void setStopThread(boolean stopThread) {
+		this.stopThread = stopThread;
+	}
 	public void createNotice(Doctor D) {
 		synchronized (AppData.notices) {
 		AppData.notices.add(new Notice(D));

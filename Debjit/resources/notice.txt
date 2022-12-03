@@ -1,0 +1,2 @@
+1001,Dr. Burnwal,OPD,M;T;W;Th;F,10:00;13:00
+1002,Dr. Sharma,Dentist,M;W,16:00;17:30

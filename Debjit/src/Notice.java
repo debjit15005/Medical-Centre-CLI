@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
@@ -16,6 +18,9 @@ public class Notice {
 //		this.daysAvailable = d.getDaysAvailable();
 //		this.time = d.getTime();
 		this.doc = d;
+		
+		AppData.notices.add(this);
+		
 	}
 	
 	
@@ -32,5 +37,18 @@ public class Notice {
 		return doc.toString();
 	}
 	
+	public void writeToFile(String string) {
+		try
+        {
+        FileWriter myWriter = new FileWriter("resources/noticeDB.txt",true);
+        myWriter.write(string+"\n");
+        myWriter.close();
+        //System.out.println("added row");
+        }
+        catch (IOException e)
+        {
+          System.out.println("An error occurred.");
+        }
+	}
 	
 }

@@ -1,6 +1,9 @@
 import java.time.DayOfWeek;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.Map;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.*;
 
 public class Student implements Runnable{
@@ -9,7 +12,8 @@ public class Student implements Runnable{
 	private String email;
 	private String mobile;
 	boolean running = true;
-	
+	Thread studThread;
+	private boolean stopThread = false;
 	
 	
 	Student (String name, int studID, String email, String mobile ){
@@ -21,43 +25,50 @@ public class Student implements Runnable{
 		AppData.studs.put(studID, this);
 	}
 	
-	void takeAppointment (long timestamp, int docID, String day, String time){
-		//Doctor doc = Doctor.docs.get(docID);
-		DayOfWeek d=null;
-		switch(day){
-			case "M":
-				d=DayOfWeek.MONDAY;
-				break;
-			case "T":
-				d=DayOfWeek.TUESDAY;
-				break;
-			case "W":
-				d=DayOfWeek.WEDNESDAY;
-				break;
-			case "Th":
-				d=DayOfWeek.THURSDAY;
-				break;
-			case "F":
-				d=DayOfWeek.FRIDAY;
-				break;
-			case "Sa":
-				d=DayOfWeek.SATURDAY;
-				break;
-			case "Su":
-				d=DayOfWeek.SUNDAY;
-				break;
+	public void start() {
+		if(studThread==null) {
+			this.studThread = new Thread(this,this.name);
+			this.studThread.start();
 		}
-		
-		String[] t = time.split(":");
-		int hour = Integer.parseInt(t[0]);
-		int min = Integer.parseInt(t[1]);
+	}
+	@Override
+	public void run() {
+		while(true) {
+			if(stopThread) {System.out.println("Ending student"); break;}
+			
+			Scanner studentScanner = new Scanner(System.in);
+				System.out.println("Welcome " + this.name);
+				Main.studentMenu(studentScanner,this);	
+		}
+	}
+	
+	public void setStopThread(boolean stopThread) {
+		this.stopThread = stopThread;
+	}
+	
+	void takeAppointment (long timestamp, int docID, DayOfWeek day, LocalTime time,String strLine) throws Exception {
 		
 		Doctor doc = AppData.docs.get(docID);
-		
-		synchronized(doc.getAppts(d)) {
-		Appointment appt = new Appointment(timestamp,this,doc,d,hour,min);
+		Set<Appointment> appts = doc.getAppts(day);
+		if(appts.size()==0) {
+			synchronized(doc.getAppts(day)) {
+				Appointment appt = new Appointment(timestamp,this,doc,day,time,strLine);
+				
+			}
 		}
-		
+		else {
+		for(Appointment a: appts) {
+			Duration d = Duration.between(a.time, time);
+			if(d.toMinutes()>=10) {
+				throw new Exception("Clash with another appointment");
+			}
+			else {
+				synchronized(doc.getAppts(day)) {
+					Appointment appt = new Appointment(timestamp,this,doc,day,time,strLine);
+				}
+			}
+		}
+		}
 		
 	}
 	
@@ -67,19 +78,12 @@ public class Student implements Runnable{
 		}
 	}
 	
-	public void purchaseMeds(int medID, int quant, String p_mode) {
-//		Medicine m = null;
-//		for(Medicine med: AppData.inventory) {
-//			if (med.getID() == medID) {
-//				m = med;
-//				break;
-//			}
-//		}
+	public void purchaseMeds(int medID, int quant, String p_mode) throws Exception {
 		if(AppData.inventory.get(medID)==null) {
-			System.out.println("Medicine not available");
+			throw new Exception("Medicine not available");
 		}
 		else if(AppData.inventory.get(medID).getQuantity()>quant) {
-			System.out.println("Quantity unservicable");
+			throw new Exception("Quantity unservicable");
 		}
 		else {
 			Medicine med = AppData.inventory.get(medID);
@@ -100,22 +104,6 @@ public class Student implements Runnable{
 			AppData.sale = AppData.sale + price;
 			
 		}
-//		if (m == null) System.out.println("Medicine unavailable");
-//		else {
-//			if (quant<= m.getQuantity()) {
-//				int bill = quant* m.getPrice();
-//				m.setQuantity(m.getQuantity() - quant);
-//				System.out.println("bill:" + bill + '\n' + "How would you like to pay?");
-//				String s = in.nextLine();
-//				if(s.compareToIgnoreCase("Pay Now") == 0)  
-//					System.out.println("Transaction successful!");
-//				if(s.compareToIgnoreCase("Pay Later") == 0) {
-//					appData.dues.computeIfPresent(this,(k,v) -> v + bill);
-//					if (appData.dues.get(this)!= null) appData.dues.put(this,bill);
-//					System.out.println("Added to your dues");
-//				}
-//			}
-//		}
 		
 	}
 
@@ -127,15 +115,26 @@ public class Student implements Runnable{
 		return this.name;
 	}
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		while(running) {
-			System.out.println(this.studID + " is running");
-			continue;
-		}
-		
+	
+	public String toString() {
+		return String.format(this.studID + " %1$%20s " +" "+ this.email + " " + this.mobile + " - " , this.name);
 	}
+	
+	public void writeToFile(String string) {
+		try
+        {
+        FileWriter myWriter = new FileWriter("resources/studentDB.txt",true);
+        myWriter.write(string+"\n");
+        myWriter.close();
+        //System.out.println("File created");
+        }
+        catch (IOException e)
+        {
+          System.out.println("An error occurred.");
+        }
+	}
+	
+	
 }
 	
 	
