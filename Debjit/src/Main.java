@@ -12,6 +12,7 @@ public class Main extends Thread{
 		Main.scanNotice(null,"resources/noticeDB.txt",0);
 		Main.scanAppointment(null, "resources/appointmentDB.txt", 0);
 		Main.scanMedicine(null, "resources/MedicineDB.txt", 0);
+		
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Welcome to MedC");
@@ -225,18 +226,18 @@ public class Main extends Thread{
 			 
 
 			 if(i==1) notice.writeToFile(strLine);
-
+			 
 		 
 		}
 		 
 		 br.close();
 		 if(i==1) System.out.println("Added notices");
-		 
+		 if(i==0)System.out.println("Loading notices");
 		}
 		catch(Exception e){
-			System.out.println("Exception while reading csv file: " + e); 
+			if(i==1)System.out.println("Exception while reading csv file: " + e); 
 		}
-		System.out.println("Loading notices");
+		
 		
 		
 	}
@@ -309,7 +310,7 @@ public class Main extends Thread{
 			 else System.out.println("Loading medicines");
 		 }
 		 catch(Exception e){
-			 System.out.println("Exception while reading csv file: " + e); 
+			 if(i==1)System.out.println("Exception while reading csv file: " + e); 
 		 }
 		
 	}
@@ -369,7 +370,7 @@ public class Main extends Thread{
 		case "Q": System.exit(0);
 		}
 	}
-	public static void scanStudent(Scanner sc,String db,int i) {
+	public static void scanStudent(Scanner sc,String db,int i){
 		
 		 try
 		 {
@@ -422,7 +423,7 @@ public class Main extends Thread{
 		 }
 		 catch(Exception e)
 		 {
-		 System.out.println("Exception while reading csv file: " + e); 
+		 if(i==1)System.out.println("Exception while reading csv file: " + e); 
 		 }
 	}
 	
@@ -500,13 +501,14 @@ public class Main extends Thread{
 		}
 		 catch(Exception e)
 		 {
-		 System.out.println("Exception while reading csv file: " + e); 
+			 if(i==1)System.out.println("Exception while reading csv file: " + e); 
 		 }
 	}
 	
 	public static void scanPurchase(Scanner sc) {
 		 try
 		 {
+		 System.out.println("Enter file:");
 		 String file = sc.nextLine();
 
 		 BufferedReader br = new BufferedReader( new FileReader(file));
@@ -529,6 +531,7 @@ public class Main extends Thread{
 			 int quantity = Integer.parseInt(st.nextToken());
 			 String p_mode = st.nextToken();
 			 try {
+				 
 				 AppData.studs.get(studID).purchaseMeds(medID, quantity, p_mode);
 				 
 			 }catch(Exception e) {

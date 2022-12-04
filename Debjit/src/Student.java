@@ -82,7 +82,7 @@ public class Student implements Runnable{
 		if(AppData.inventory.get(medID)==null) {
 			throw new Exception("Medicine not available");
 		}
-		else if(AppData.inventory.get(medID).getQuantity()>quant) {
+		else if(AppData.inventory.get(medID).getQuantity()<quant) {
 			throw new Exception("Quantity unservicable");
 		}
 		else {
@@ -96,7 +96,8 @@ public class Student implements Runnable{
 				System.out.println("Paid in Cash");
 				break;
 			case "Later":
-				AppData.dues.replace(this, AppData.dues.get(this)-price) ;
+				if(AppData.dues.get(this)!=null)AppData.dues.replace(this, AppData.dues.get(this)+price) ;
+				else {AppData.dues.replace(this, price) ;}
 				System.out.println("Purchase added to dues");
 				break;
 			}
@@ -108,7 +109,8 @@ public class Student implements Runnable{
 	}
 
 	public void checkDues() {
-		System.out.println("Your current dues: " +AppData.dues.get(this));
+		if(AppData.dues.get(this)!=null)System.out.println("Your current dues: " +AppData.dues.get(this));
+		else {System.out.println("Your current dues: 0" );}
 	}
 		
 	public String getName() {
@@ -117,7 +119,7 @@ public class Student implements Runnable{
 
 	
 	public String toString() {
-		return String.format(this.studID + " %1$%20s " +" "+ this.email + " " + this.mobile + " - " , this.name);
+		return String.format(this.studID + " %20s " +" "+ this.email + " " + this.mobile + " - " , this.name);
 	}
 	
 	public void writeToFile(String string) {
