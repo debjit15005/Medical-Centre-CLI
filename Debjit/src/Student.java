@@ -103,6 +103,8 @@ public class Student implements Runnable{
 			}
 			
 			AppData.sale = AppData.sale + price;
+			AppData.writeToFile(price);
+			
 			
 		}
 		

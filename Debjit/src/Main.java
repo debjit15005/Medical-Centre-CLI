@@ -12,6 +12,7 @@ public class Main extends Thread{
 		Main.scanNotice(null,"resources/noticeDB.txt",0);
 		Main.scanAppointment(null, "resources/appointmentDB.txt", 0);
 		Main.scanMedicine(null, "resources/MedicineDB.txt", 0);
+		AppData.scanSales("resources/SALES.txt",0);
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -59,7 +60,7 @@ public class Main extends Thread{
 //		Admin admin = new Admin();
 //		admin.start();
 		
-		System.out.println("Menu: \n 1 View Student records\n 2 Today's appointments\n 3 Update Notice Board \n 4 Medicine Store\n 0 Quit");
+		System.out.println("Menu: \n 1 View Student records\n 2 View appointments\n 3 Update Notice Board \n 4 Medicine Store\n 5 Net Sales\n 0 Quit");
 		in = sc.nextInt();
 		sc.nextLine();
 		switch(in){
@@ -71,11 +72,11 @@ public class Main extends Thread{
 			adminMenu(sc);
 			break;
 		case 2:
-			System.out.println("Today's appointments");
+			System.out.println("Choose day");
 			String day = sc.nextLine();
 			DayOfWeek d = parseDay(day);
+			System.out.println("Appointments on " + day);
 			
-		
 			for(Map.Entry<Integer,Doctor> doc : AppData.docs.entrySet()) {
 				Iterator<Appointment> i = doc.getValue().getAppts(d).iterator();
 				while(i.hasNext()) {
@@ -95,6 +96,9 @@ public class Main extends Thread{
 			
 			//System.out.println(admin.adminThread.isAlive());
 			medicineStoreMenu(sc);
+			break;
+		case 5:
+			System.out.println("Net sales: "+AppData.sale);
 			break;
 		case 0:
 //			System.out.println(admin.adminThread.isAlive());

@@ -4,12 +4,12 @@ import java.util.*;
 
 public class Doctor {
 	int docID;
-	String name;
-	String consultationType;
-	DayOfWeek[] daysAvailable;
-	LocalTime startTime;
-	LocalTime endTime;
-	List<HashSet<Appointment>> appt;//use appointment instead of start time of appointment; make custom comparator for sorting
+	private String name;
+	private String consultationType;
+	private DayOfWeek[] daysAvailable;
+	private LocalTime startTime;
+	private LocalTime endTime;
+	private List<HashSet<Appointment>> appt;//use appointment instead of start time of appointment; make custom comparator for sorting
 	
 	
 	Doctor(int docID, String name, String consultationType, DayOfWeek[] daysAvailable,LocalTime startTime,LocalTime endTime){
