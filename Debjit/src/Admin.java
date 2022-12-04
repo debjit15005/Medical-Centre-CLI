@@ -37,24 +37,6 @@ public class Admin implements Runnable{
 		}
 	}
 	
-	public void createDoctor() {
-		
-	}
-	
-	public void deleteDoctor() {
-		
-	}
-	
-	
-	
-	public void removeStudent() {
-		
-	}
-	
-	public void viewStudents() {
-		
-	}
-	
 	void checkAllDues() {
 		System.out.println("All dues");
 		for (Map.Entry<Student,Integer> entry : AppData.dues.entrySet()) 

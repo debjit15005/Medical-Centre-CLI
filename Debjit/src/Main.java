@@ -57,10 +57,8 @@ public class Main extends Thread{
 	public static void adminMenu(Scanner sc) {
 //		System.out.println("in adminMenu");
 		int in = 0;
-//		Admin admin = new Admin();
-//		admin.start();
-		
-		System.out.println("Menu: \n 1 View Student records\n 2 View appointments\n 3 Update Notice Board \n 4 Medicine Store\n 5 Net Sales\n 0 Quit");
+
+		System.out.println("Menu: \n 1 View Student records\n 2 Remove Student\n 3 View appointments\n 4 Update Notice Board \n 5 Medicine Store\n 6 Net Sales\n 0 Quit");
 		in = sc.nextInt();
 		sc.nextLine();
 		switch(in){
@@ -71,7 +69,7 @@ public class Main extends Thread{
 			System.out.println();
 			adminMenu(sc);
 			break;
-		case 2:
+		case 3:
 			System.out.println("Choose day");
 			String day = sc.nextLine();
 			DayOfWeek d = parseDay(day);
@@ -87,17 +85,17 @@ public class Main extends Thread{
 			System.out.println();
 			adminMenu(sc);
 			break;
-		case 3:
+		case 4:
 			
 			noticeBoardMenu(sc);
 			
 			break;
-		case 4:
+		case 5:
 			
 			//System.out.println(admin.adminThread.isAlive());
 			medicineStoreMenu(sc);
 			break;
-		case 5:
+		case 6:
 			System.out.println("Net sales: "+AppData.sale);
 			break;
 		case 0:
@@ -112,6 +110,17 @@ public class Main extends Thread{
 //			System.out.println(admin.adminThread.isAlive());
 //			//modeMenu(sc);
 			System.exit(0);
+		case 2:
+			System.out.println("Enter id: ");
+			int id = Integer.parseInt(sc.nextLine());
+			if(AppData.studs.containsKey(id)) {
+				AppData.studs.remove(id);
+				System.out.println("Student Removed");
+			}
+			else {
+				System.out.println("Student not found");
+			}
+			adminMenu(sc);
 			
 		}
 		
@@ -299,9 +308,10 @@ public class Main extends Thread{
 		
 				 tokenNumber++;
 		
-				 
 				 int medID = Integer.parseInt(st.nextToken());
+
 				 String name = st.nextToken();
+
 				 int price = Integer.parseInt(st.nextToken());
 				 int quantity = Integer.parseInt(st.nextToken());
 				 

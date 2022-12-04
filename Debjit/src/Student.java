@@ -97,13 +97,14 @@ public class Student implements Runnable{
 				break;
 			case "Later":
 				if(AppData.dues.get(this)!=null)AppData.dues.replace(this, AppData.dues.get(this)+price) ;
-				else {AppData.dues.replace(this, price) ;}
+				else {AppData.dues.put(this, price) ;}
 				System.out.println("Purchase added to dues");
 				break;
 			}
 			
 			AppData.sale = AppData.sale + price;
 			AppData.writeToFile(price);
+			
 			
 			
 		}
