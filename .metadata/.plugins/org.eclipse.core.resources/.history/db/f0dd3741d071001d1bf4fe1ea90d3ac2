@@ -1,8 +1,0 @@
-import java.util.*;
-
-public class AppData {
-	//ArrayList <Medicine> inventory = new ArrayList<>();
-	static Map <Integer,Doctor> docs = new HashMap<Integer,Doctor>();
-	//HashMap <Student, Integer> dues = new HashMap<>();
-	static Map<Integer,Student> studs = new HashMap<Integer,Student>();
-}
